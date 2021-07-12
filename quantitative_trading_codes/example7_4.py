@@ -42,7 +42,6 @@ for t in np.arange(lookback+1,end_index):
     Rexp = np.sum(clf.predict(X),axis=0)
     R=dailyret.iloc[t-lookback+1:t+1,].T # here the columns of R are the different observations.
 
-    
     idxSort=Rexp.argsort()  
     
     positionsTable[t, hasData[idxSort[np.arange(0, topN)]]]=-1
