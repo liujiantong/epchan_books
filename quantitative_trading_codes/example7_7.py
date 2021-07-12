@@ -8,7 +8,8 @@ df['Date']=df['Date'].round().astype('int')
 df['Date']=pd.to_datetime(df['Date'], format='%Y%m%d')
 df.set_index('Date', inplace=True)
 
-eomPrice=df.resample('M').last()[:-1] # End of month prices.  Need to remove last date because it isn't really end of January.
+# End of month prices.  Need to remove last date because it isn't really end of January.
+eomPrice=df.resample('M').last()[:-1]
 monthlyRet=eomPrice.pct_change(1, fill_method=None)
 
 positions=np.zeros(monthlyRet.shape)

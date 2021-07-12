@@ -10,10 +10,14 @@ df['Date']=df['Date'].round().astype('int')
 df['Date']=pd.to_datetime(df['Date'], format='%Y%m%d')
 df.set_index('Date', inplace=True)
 
-eoyPrice=df.resample('Y').last()[0:-1] # End of December prices. Need to remove last date because it isn't really end of year
+# End of December prices. Need to remove last date because it isn't really end of year
+eoyPrice=df.resample('Y').last()[0:-1]
 annret=eoyPrice.pct_change().iloc[1:,:] # first row has NaN
 
-eojPrice=df.resample('BA-JAN').last()[1:-1] # End of January prices. Need to remove first date to match the years in lastdayofDec. Need to remove last date because it isn't really end of January.
+# End of January prices. Need to remove first date to match the years in lastdayofDec. 
+# Need to remove last date because it isn't really end of January.
+# (B)A(S)-JAN - annual frequency, anchored end of January
+eojPrice=df.resample('BA-JAN').last()[1:-1]
 janret=(eojPrice.values-eoyPrice.values)/eoyPrice.values
 janret=janret[1:,] # match number of rows in annret
 
