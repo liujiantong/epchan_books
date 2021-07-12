@@ -93,7 +93,7 @@ g_cppi=0
 drawdown=0
 for t in range(df.shape[0]):
     g_cppi+=np.log(1+df.iloc[t,]*D*optimalF*(1+drawdown))
-    drawdown=np.min([0, (1+drawdown)*(1+df.iloc[t,])-1])
+    drawdown=np.min([0, (1+drawdown)*(1+df.iloc[t,0])-1])
     
 g_cppi=g_cppi/len(df)
 print('Growth rate on historical returns CPPI=%f' % (g_cppi))
