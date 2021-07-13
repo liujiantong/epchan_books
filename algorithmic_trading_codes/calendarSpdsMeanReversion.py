@@ -4,6 +4,7 @@ import pandas as pd
 #import matplotlib.pyplot as plt
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import adfuller
+from sklearn.linear_model import LinearRegression
 
 
 df=pd.read_csv('inputDataDaily_CL_20120502.csv')
@@ -36,10 +37,14 @@ deltaGamma=gammaGood-gammalag
 deltaGamma=deltaGamma[1:]
 gammalag=gammalag[1:]
 
-X=sm.add_constant(gammalag)
-model=sm.OLS(deltaGamma, X)
-res=model.fit()
-halflife=-np.log(2)/res.params[1]
+# X=sm.add_constant(gammalag)
+# model=sm.OLS(deltaGamma, X)
+# res=model.fit()
+# halflife=-np.log(2)/res.params[0]
+X, y = gammalag, deltaGamma
+lin_reg = LinearRegression()
+lin_reg.fit(X, y)
+halflife = -np.log(2) / lin_reg.coef_[0][0]
 # 41.095311903707795
 
 lookback=int(halflife)
